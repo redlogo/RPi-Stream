@@ -17,7 +17,9 @@ def main():
     time.sleep(2.0)
 
     while True:
+        start_time = time.monotonic()
         image_sender.send_image_compressed(rpi_cam.name, rpi_cam.get_image())
+        print("sender fps: %.1f" % (time.monotonic() - start_time))
 
 
 if __name__ == '__main__':
