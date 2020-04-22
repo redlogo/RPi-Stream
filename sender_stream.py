@@ -1,6 +1,6 @@
 import time
-from .rpi_camera import RPiCamera
-from .sender_engine import Sender
+from sender.rpi_camera import RPiCamera
+from sender.sender_engine import Sender
 
 
 def main():
@@ -9,10 +9,13 @@ def main():
     target_ip = '192.168.7.33'
     target_port = '5555'
 
-    rpi_cam = RPiCamera(width, height)
     image_sender = Sender(target_ip, target_port)
     image_sender.set_quality(75)
+
+    rpi_cam = RPiCamera(width, height)
+    rpi_cam.start()
     time.sleep(2.0)
+
     while True:
         image_sender.send_image_compressed(rpi_cam.name, rpi_cam.get_image())
 
