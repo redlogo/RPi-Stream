@@ -1,7 +1,8 @@
-import cv2
 import time
-import numpy as np
+
+import cv2
 import imagezmq
+import numpy as np
 
 from utilities.stats import MovingAverage
 

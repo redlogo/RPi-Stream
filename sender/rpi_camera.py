@@ -1,4 +1,5 @@
 import socket
+
 from imutils.video import VideoStream
 
 
