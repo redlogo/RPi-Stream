@@ -10,9 +10,11 @@ def main():
     height = 512
     target_ip = '192.168.7.33'
     target_port = '5555'
+    quality = 65
+    moving_average_points = 50
 
     image_sender = Sender(target_ip, target_port)
-    image_sender.set_quality(65)
+    image_sender.set_quality(quality)
     print('RPi Stream -> Sender Initialized')
 
     rpi_cam = RPiCamera(width, height)
@@ -21,10 +23,10 @@ def main():
     time.sleep(1.0)
 
     print('RPi Stream -> Start Streaming')
-    moving_average_fps = MovingAverage(50)
-    moving_average_camera_time = MovingAverage(50)
-    moving_average_compress_time = MovingAverage(50)
-    moving_average_send_time = MovingAverage(50)
+    moving_average_fps = MovingAverage(moving_average_points)
+    moving_average_camera_time = MovingAverage(moving_average_points)
+    moving_average_compress_time = MovingAverage(moving_average_points)
+    moving_average_send_time = MovingAverage(moving_average_points)
     while True:
         start_time = time.monotonic()
         image = rpi_cam.get_image()
