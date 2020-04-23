@@ -4,8 +4,8 @@ from sender.sender_engine import Sender
 
 
 def main():
-    width = 1000
-    height = 500
+    width = 1008
+    height = 512
     target_ip = '192.168.7.33'
     target_port = '5555'
 
@@ -19,7 +19,7 @@ def main():
     while True:
         start_time = time.monotonic()
         image_sender.send_image_compressed(rpi_cam.name, rpi_cam.get_image())
-        print("sender fps: %.1f" % (time.monotonic() - start_time))
+        print("sender fps: %.1f" % (1 / (time.monotonic() - start_time)))
 
 
 if __name__ == '__main__':
