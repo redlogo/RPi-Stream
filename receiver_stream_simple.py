@@ -20,6 +20,7 @@ def main():
     moving_average_decompress_time = MovingAverage(moving_average_points)
     moving_average_reply_time = MovingAverage(moving_average_points)
     moving_average_image_show_time = MovingAverage(moving_average_points)
+    image_count = 0
     while True:
         start_time = time.monotonic()
 
@@ -54,13 +55,18 @@ def main():
                      + moving_average_reply_time.get_moving_average() \
                      + moving_average_image_show_time.get_moving_average()
 
-        print(" receiver's fps: %.1f"
-              " receiver's time components: receiving %.1f%% decompressing %.1f%% replying %.1f%% image show %.1f%%"
-              % (moving_average_fps.get_moving_average(),
-                 moving_average_receive_time.get_moving_average() / total_time * 100,
-                 moving_average_decompress_time.get_moving_average() / total_time * 100,
-                 moving_average_reply_time.get_moving_average() / total_time * 100,
-                 moving_average_image_show_time.get_moving_average() / total_time * 100), end='\r')
+        if image_count % 10 == 0:
+            print(" receiver's fps: %5.1f"
+                  " receiver's time components: receiving %4.1f%% decompressing %4.1f%% replying %4.1f%% image show "
+                  "%4.1f%% "
+                  % (moving_average_fps.get_moving_average(),
+                     moving_average_receive_time.get_moving_average() / total_time * 100,
+                     moving_average_decompress_time.get_moving_average() / total_time * 100,
+                     moving_average_reply_time.get_moving_average() / total_time * 100,
+                     moving_average_image_show_time.get_moving_average() / total_time * 100), end='\r')
+        image_count += 1
+        if image_count == 10000000:
+            image_count = 0
 
 
 if __name__ == "__main__":

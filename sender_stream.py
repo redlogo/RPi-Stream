@@ -27,6 +27,7 @@ def main():
     moving_average_camera_time = MovingAverage(moving_average_points)
     moving_average_compress_time = MovingAverage(moving_average_points)
     moving_average_send_time = MovingAverage(moving_average_points)
+    image_count = 0
     while True:
         start_time = time.monotonic()
         image = rpi_cam.get_image()
@@ -40,11 +41,15 @@ def main():
                      + moving_average_send_time.get_moving_average()
         instant_fps = 1 / (time.monotonic() - start_time)
         moving_average_fps.add(instant_fps)
-        print(" sender's fps: %.1f sender's time components: camera %.1f%% compressing %.1f%% sending %.1f%%"
-              % (moving_average_fps.get_moving_average(),
-                 moving_average_camera_time.get_moving_average() / total_time * 100,
-                 moving_average_compress_time.get_moving_average() / total_time * 100,
-                 moving_average_send_time.get_moving_average() / total_time * 100), end='\r')
+        if image_count % 10 == 0:
+            print(" sender's fps: %5.1f sender's time components: camera %4.1f%% compressing %4.1f%% sending %4.1f%%"
+                  % (moving_average_fps.get_moving_average(),
+                     moving_average_camera_time.get_moving_average() / total_time * 100,
+                     moving_average_compress_time.get_moving_average() / total_time * 100,
+                     moving_average_send_time.get_moving_average() / total_time * 100), end='\r')
+        image_count += 1
+        if image_count == 10000000:
+            image_count = 0
 
 
 if __name__ == '__main__':
