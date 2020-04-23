@@ -1,4 +1,5 @@
 import cv2
+import time
 import imagezmq
 
 
@@ -18,5 +19,9 @@ class Sender:
         self.quality = quality
 
     def send_image_compressed(self, name, image):
+        start_time = time.monotonic()
         _, compressed_image = cv2.imencode(".jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), self.quality])
+        compress_finish_time = time.monotonic()
         self.sender.send_jpg(name, compressed_image)
+        send_finish_time = time.monotonic()
+        return compress_finish_time - start_time, send_finish_time - compress_finish_time
