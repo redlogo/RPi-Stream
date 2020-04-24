@@ -2,6 +2,9 @@ from _collections import deque
 
 
 class MovingAverage:
+    """
+    A class to calculate moving average of a value, implemented with deque.
+    """
     __slots__ = 'capacity', 'avg', 'dq', 'sum'
 
     def __init__(self, capacity):
@@ -11,6 +14,10 @@ class MovingAverage:
         self.sum = 0
 
     def add(self, val):
+        """
+        :param val: new value
+        :return: nothing
+        """
         if len(self.dq) == self.capacity:
             self.sum -= self.dq.popleft()
         self.dq.append(val)
@@ -19,4 +26,7 @@ class MovingAverage:
             self.avg = self.sum / len(self.dq)
 
     def get_moving_average(self):
+        """
+        :return: the current moving average
+        """
         return self.avg
