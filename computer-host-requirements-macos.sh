@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# recommend to execute these in python virtual env, such as Anaconda / conda, etc.
+
 # install python libs
 pip install curl
 pip install numpy
