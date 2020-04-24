@@ -1,4 +1,4 @@
-# RPi Stream Object Detection
+# Raspberry Pi Stream Object Detection
 ## Introduction
 Live camera stream from Raspberry Pi to local host, do object detection with Coral EdgeTPU on host side.
 
