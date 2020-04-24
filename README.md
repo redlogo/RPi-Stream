@@ -8,7 +8,7 @@ Live camera stream from Raspberry Pi to local host, do object detection with Cor
 <br>Cross platform capability, ready for Ubuntu, MacOS, Windows.
 ## Video Tutorial
 * [A preview of this project](https://www.youtube.com/watch?v=PCdNH4zSNug)
-* [![Foo](meta/preview.png)](https://www.youtube.com/watch?v=PCdNH4zSNug)
+* [![preview](meta/preview.png)](https://www.youtube.com/watch?v=PCdNH4zSNug)
 ## Preparation and Environment
 * Raspberry Pi, [latest RPi4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) is recommended.
 * A camera for RPi, such as [RPi camera module V2](https://www.raspberrypi.org/products/camera-module-v2/), enable it on RPi.
