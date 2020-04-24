@@ -1,11 +1,11 @@
-# Fast Raspberry Pi Stream Object Detection - Cross Platform
+# Fast Raspberry Pi Stream Object Detection - Multi Platform
 ## Introduction
 Live camera stream from Raspberry Pi to local host, do object detection with Coral EdgeTPU on host side.
 
 <br>A FPS 35-45 can be achieved, depending on the network condition. 
 <br>Can be used as an AI-powered surveillance camera application.
 
-<br>Cross platform capability, ready for Ubuntu, MacOS, Windows.
+<br>Multiple platform capability, ready for Ubuntu, MacOS, Windows.
 ## Video Tutorial
 * [A preview of this project](https://www.youtube.com/watch?v=PCdNH4zSNug)
 * [![preview](meta/preview.png)](https://www.youtube.com/watch?v=PCdNH4zSNug)
