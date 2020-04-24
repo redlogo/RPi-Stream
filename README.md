@@ -22,16 +22,22 @@ Install libs needed for Raspberry Pi side:
 ```
 sudo bash RPi-requirements.sh
 ```
-Install libs required for local computer host side (Linux):
+Install libs required for local computer host side with the USB EdgeTPU unplugged:
 ```
-sudo bash computer-host-requirements.sh
+bash computer-host-requirements.sh
 ```
+Plug USB EdgeTPU into the host usb 3.0 port.
 ## Usage
-Firstly execute on RPi side:
+Edit on RPi side, change sender_stream.py:
+```
+# line 20, change it to your local computer host ip
+target_ip = '192.168.7.33'  
+```
+Firstly execute script on RPi side:
 ```
 python3 sender_stream.py
 ```
-Secondly execute on local computer host side:
+Secondly execute script on local computer host side:
 ```
 python3 receiver_stream_object_detection.py
 ```

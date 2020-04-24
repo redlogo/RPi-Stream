@@ -1,4 +1,5 @@
 import cv2
+import platform
 import numpy as np
 import tflite_runtime.interpreter as tflite_interpreter
 from PIL import Image
@@ -35,7 +36,8 @@ class Model:
                 'model_height', \
                 'update_tensor', \
                 'model_channel', \
-                'confidence_level'
+                'confidence_level', \
+                'edgetpu_lib'
 
     def __init__(self):
         self.labels = {}
@@ -46,6 +48,11 @@ class Model:
         self.update_tensor = None
         self.model_channel = 0
         self.confidence_level = 0.8
+        # Darwin means macOS...
+        self.edgetpu_lib = {'Linux': 'libedgetpu.so.1',
+                            'Darwin': 'libedgetpu.1.dylib',
+                            'Windows': 'edgetpu.dll'
+                            }[platform.system()]
 
     def set_confidence_level(self, confidence_level):
         """
@@ -57,15 +64,15 @@ class Model:
     def load_model(self, model_file_path):
         """
         Load a model into tflite interpreter.
-        Only Linux env receiver is tested and supported now.
         Tricky part:
             self.update_tensor is a local numpy array that holds image, which is to be updated into the model.
         :param model_file_path: Path of the pre-trained model used.
         :return: nothing
         """
+
         self.model_interpreter = tflite_interpreter.Interpreter(
             model_path=model_file_path,
-            experimental_delegates=[tflite_interpreter.load_delegate('libedgetpu.so.1', {})])
+            experimental_delegates=[tflite_interpreter.load_delegate(self.edgetpu_lib, {})])
         self.model_interpreter.allocate_tensors()
         _, self.model_height, self.model_width, _ = self.model_interpreter.get_input_details()[0]['shape']
         self.update_tensor = self.model_interpreter.get_tensor(self.model_interpreter.get_input_details()[0]['index'])
