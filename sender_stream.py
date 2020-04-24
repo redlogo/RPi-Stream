@@ -1,3 +1,4 @@
+import argparse
 import time
 
 from sender.rpi_camera import RPiCamera
@@ -10,6 +11,9 @@ def main():
     main function interface
     :return: nothing
     """
+    parser = argparse.ArgumentParser(description='optional inputs')
+    parser.add_argument('--profiling', action='store_true')
+    args = parser.parse_args()
 
     # video info
     width = 640
@@ -49,27 +53,33 @@ def main():
         # capture image
         image = rpi_cam.get_image()
         camera_time = time.monotonic() - start_time
-        moving_average_camera_time.add(camera_time)
+        if args.profiling:
+            moving_average_camera_time.add(camera_time)
 
         # send compressed image (compress + send)
-        compress_time, send_time = image_sender.send_image_compressed(rpi_cam.name, image)
-        moving_average_compress_time.add(compress_time)
-        moving_average_send_time.add(send_time)
+        compress_time, send_time = image_sender.send_image_compressed(rpi_cam.name, image, args.profiling)
+        if args.profiling:
+            moving_average_compress_time.add(compress_time)
+            moving_average_send_time.add(send_time)
 
         # statistics
-        total_time = moving_average_camera_time.get_moving_average() \
-                     + moving_average_compress_time.get_moving_average() \
-                     + moving_average_send_time.get_moving_average()
         instant_fps = 1 / (time.monotonic() - start_time)
         moving_average_fps.add(instant_fps)
+        if args.profiling:
+            total_time = moving_average_camera_time.get_moving_average() \
+                         + moving_average_compress_time.get_moving_average() \
+                         + moving_average_send_time.get_moving_average()
 
         # terminal prints
         if image_count % 10 == 0:
-            print(" sender's fps: %5.1f sender's time components: camera %4.1f%% compressing %4.1f%% sending %4.1f%%"
-                  % (moving_average_fps.get_moving_average(),
-                     moving_average_camera_time.get_moving_average() / total_time * 100,
-                     moving_average_compress_time.get_moving_average() / total_time * 100,
-                     moving_average_send_time.get_moving_average() / total_time * 100), end='\r')
+            if args.profiling:
+                print(" sender's fps: %5.1f sender's time components: camera %4.1f%% compressing %4.1f%% sending %4.1f%%"
+                      % (moving_average_fps.get_moving_average(),
+                         moving_average_camera_time.get_moving_average() / total_time * 100,
+                         moving_average_compress_time.get_moving_average() / total_time * 100,
+                         moving_average_send_time.get_moving_average() / total_time * 100), end='\r')
+            else:
+                print(" sender's fps: %5.1f" % moving_average_fps.get_moving_average(), end='\r')
 
         # counter
         image_count += 1

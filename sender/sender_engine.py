@@ -37,21 +37,27 @@ class Sender:
         """
         self.sender.send_image(name, image)
 
-    def send_image_compressed(self, name, image):
+    def send_image_compressed(self, name, image, profiling):
         """
         Send compressed image (jpg), high efficiency
         :param name: Name.
         :param image: Image input as numpy array.
         :return: statistics of how long time it takes to compress, and to send image
         """
-        start_time = time.monotonic()
+        if profiling:
+            start_time = time.monotonic()
 
         # compress image
         _, compressed_image = cv2.imencode(".jpg", image, [int(cv2.IMWRITE_JPEG_QUALITY), self.quality])
-        compress_finish_time = time.monotonic()
+        if profiling:
+            compress_finish_time = time.monotonic()
 
         # send image
         self.sender.send_jpg(name, compressed_image)
-        send_finish_time = time.monotonic()
+        if profiling:
+            send_finish_time = time.monotonic()
 
-        return compress_finish_time - start_time, send_finish_time - compress_finish_time
+        if profiling:
+            return compress_finish_time - start_time, send_finish_time - compress_finish_time
+        else:
+            return 0, 0
