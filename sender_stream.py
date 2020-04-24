@@ -7,7 +7,7 @@ from utilities.stats import MovingAverage
 
 def main():
     width = 640
-    height = 360
+    height = 368
     target_ip = '192.168.7.33'
     target_port = '5555'
     quality = 65
