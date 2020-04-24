@@ -2,7 +2,7 @@
 Live stream a camera from Raspberry Pi to local computer host, and do object detection with Coral EdgeTPU within the local host. A FPS 35-45 can be achieved, depending on the network condition. Can be used as an AI-powered surveillance camera application.
 ## Video Tutorial
 * [A preview of this project](https://www.youtube.com/watch?v=PCdNH4zSNug)
-[![Foo](meta/preview.png)](https://www.youtube.com/watch?v=PCdNH4zSNug)
+* [![Foo](meta/preview.png)](https://www.youtube.com/watch?v=PCdNH4zSNug)
 ## Preparation
 You will need:
 * Raspberry Pi, [latest RPi4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) is recommended.
