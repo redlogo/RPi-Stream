@@ -11,8 +11,9 @@ Live camera stream from Raspberry Pi to local host, do object detection with Cor
 * [![preview](meta/preview.png)](https://www.youtube.com/watch?v=PCdNH4zSNug)
 ## Preparation and Environment
 * Raspberry Pi, [latest RPi4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) is recommended.
+* Latest [Raspbian](https://www.raspberrypi.org/downloads/raspbian/) is recommended for RPi. 
 * A camera for RPi, such as [RPi camera module V2](https://www.raspberrypi.org/products/camera-module-v2/), enable it on RPi.
-* A local computer as host, Ubuntu, MacOS, Windows are supported.
+* A computer (with usb 3.0 port), Ubuntu, MacOS, Windows are supported.
 * [Coral EdgeTPU](https://coral.ai/products/accelerator/), USB version is tested in this repo.
 * Python virtual env is recommended for both RPi and computer host sides.
   * virtualenv (python3.7) is recommended for RPi.
@@ -28,10 +29,12 @@ bash RPi-requirements.sh
 ```
 Install libs required for local computer host with the USB EdgeTPU unplugged:
 ```
-# choose the correct one, depending on your computer system.
+# Ubuntu
 bash computer-hose-requirements-linux.sh
+# MacOS
 bash computer-host-requirements-macos.sh
-bash computer-host-requirements-windows.sh
+# Windows
+open computer-host-requirements-windows.txt and install libs accordingly
 ```
 Plug USB EdgeTPU into the host usb 3.0 port.
 ## Usage
@@ -47,6 +50,7 @@ python3 sender_stream.py
 Secondly execute script on local computer host side:
 ```
 python3 receiver_stream_object_detection.py
+(Windows: if cannot run, try 'python' or use IDE to execute script instead of Windows CMD)
 ```
 To exit streaming, firstly terminate (ctrl + c) RPi side, then computer host side.
 ## Coding Style
