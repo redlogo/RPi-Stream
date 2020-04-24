@@ -19,7 +19,8 @@ class Model:
                 'model_width', \
                 'model_height', \
                 'update_tensor', \
-                'model_channel'
+                'model_channel', \
+                'confidence_level'
 
     def __init__(self):
         self.labels = {}
@@ -29,7 +30,10 @@ class Model:
         self.model_height = 0
         self.update_tensor = None
         self.model_channel = 0
-        pass
+        self.confidence_level = 0.8
+
+    def set_confidence_level(self, confidence_level):
+        self.confidence_level = confidence_level
 
     def load_model(self, model_file_path):
         self.model_interpreter = tflite_interpreter.Interpreter(
@@ -82,6 +86,9 @@ class Model:
 
     def inference(self):
         self.model_interpreter.invoke()
-        boxes = self.model_interpreter.get_tensor(self.model_interpreter.get_output_details()[0]['index'])
-        class_ids = self.model_interpreter.get_tensor(self.model_interpreter.get_output_details()[1]['index'])
-        scores = self.model_interpreter.get_tensor(self.model_interpreter.get_output_details()[2]['index'])
+        boxes = self.model_interpreter.get_tensor(self.model_interpreter.get_output_details()[0]['index'])[0]
+        class_ids = self.model_interpreter.get_tensor(self.model_interpreter.get_output_details()[1]['index'])[0]
+        scores = self.model_interpreter.get_tensor(self.model_interpreter.get_output_details()[2]['index'])[0]
+        compare = scores > self.confidence_level
+        indexes = [i for i, val in enumerate(compare) if val]
+        return class_ids[indexes], scores[indexes], boxes[indexes]

@@ -6,6 +6,7 @@ import numpy as np
 
 from utilities.stats import MovingAverage
 from object_detection.object_detection import Model
+from utilities.render import Render
 
 
 def main():
@@ -16,7 +17,8 @@ def main():
     image_hub = imagezmq.ImageHub()
     print('RPi Stream -> Receiver Initialized')
     time.sleep(1.0)
-    print('RPi Stream -> Receiver Streaming')
+    render = Render()
+    print('RPi Stream -> Render Ready')
 
     moving_average_fps = MovingAverage(50)
     moving_average_receive_time = MovingAverage(50)
@@ -26,6 +28,7 @@ def main():
     moving_average_reply_time = MovingAverage(50)
     moving_average_image_show_time = MovingAverage(50)
     image_count = 0
+    print('RPi Stream -> Receiver Streaming')
     while True:
         start_time = time.monotonic()
 
@@ -35,15 +38,17 @@ def main():
         image = cv2.imdecode(np.frombuffer(compressed, dtype='uint8'), -1)
         decompressed_time = time.monotonic()
 
-        model.load_image_cv2_backend(image)
+        model.load_image_pil_backend(image)
         model_loaded_image_time = time.monotonic()
 
-        model.inference()
+        class_ids, scores, boxes = model.inference()
         model_inferenced_time = time.monotonic()
 
         image_hub.send_reply(b'OK')
         replied_time = time.monotonic()
 
+        render.set_image(image)
+        render.render_detection(class_ids, scores, boxes, image.shape[1], image.shape[0], model.image_scale, (45, 227, 227), 3)
         cv2.imshow(name, image)
         image_showed_time = time.monotonic()
 
