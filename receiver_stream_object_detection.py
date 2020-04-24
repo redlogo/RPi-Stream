@@ -4,9 +4,9 @@ import cv2
 import imagezmq
 import numpy as np
 
-from utilities.stats import MovingAverage
 from object_detection.object_detection import Model
 from utilities.render import Render
+from utilities.stats import MovingAverage
 
 
 def main():
@@ -104,12 +104,12 @@ def main():
         if image_count % 10 == 0:
             print(" receiver's fps: %4.1f"
                   " receiver's time components: "
-                      "receiving %4.1f%% "
-                      "decompressing %4.1f%% "
-                      "model load image %4.1f%% "
-                      "model inference %4.1f%% "
-                      "replying %4.1f%% "
-                      "image show %4.1f%%"
+                  "receiving %4.1f%% "
+                  "decompressing %4.1f%% "
+                  "model load image %4.1f%% "
+                  "model inference %4.1f%% "
+                  "replying %4.1f%% "
+                  "image show %4.1f%%"
                   % (moving_average_fps.get_moving_average(),
                      moving_average_receive_time.get_moving_average() / total_time * 100,
                      moving_average_decompress_time.get_moving_average() / total_time * 100,

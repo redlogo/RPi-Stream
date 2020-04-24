@@ -1,7 +1,7 @@
 import cv2
-from PIL import Image
 import numpy as np
 import tflite_runtime.interpreter as tflite_interpreter
+from PIL import Image
 
 
 def pil_resize_image(image, size):
