@@ -38,7 +38,7 @@ def main():
         image = cv2.imdecode(np.frombuffer(compressed, dtype='uint8'), -1)
         decompressed_time = time.monotonic()
 
-        model.load_image_pil_backend(image)
+        model.load_image_cv2_backend(image)
         model_loaded_image_time = time.monotonic()
 
         class_ids, scores, boxes = model.inference()
