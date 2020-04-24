@@ -46,7 +46,7 @@ Secondly execute script on local computer host side:
 ```
 python3 receiver_stream_object_detection.py
 ```
-To exit streaming, firstly terminate RPi side, then computer host side.
+To exit streaming, firstly terminate (ctrl + c) RPi side, then computer host side.
 ## Coding Style
 General Python 3 Coding style.
 ## Version
