@@ -48,7 +48,8 @@ def main():
         replied_time = time.monotonic()
 
         render.set_image(image)
-        render.render_detection(class_ids, scores, boxes, image.shape[1], image.shape[0], model.image_scale, (45, 227, 227), 3)
+        render.render_detection(model.labels, class_ids, boxes, image.shape[1], image.shape[0], model.image_scale, (45, 227, 227), 3)
+        render.render_fps(moving_average_fps.get_moving_average())
         cv2.imshow(name, image)
         image_showed_time = time.monotonic()
 

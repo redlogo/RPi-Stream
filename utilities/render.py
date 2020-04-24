@@ -22,9 +22,14 @@ class Render:
     def set_image(self, image):
         self.image = image
 
-    def render_detection(self, class_ids, scores, boxes, image_width, image_height, scale, color, line_width):
-        print(boxes)
+    def render_fps(self, fps):
+        cv2.putText(self.image, "FPS:%4.1f" % fps, (30, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
+
+    def render_detection(self, labels, class_ids, boxes, image_width, image_height, scale, color, line_width):
         boxes = scale_and_trim_boxes(boxes, image_width, image_height, scale)
-        print(boxes)
-        for box in boxes:
+        for i in range(len(boxes)):
+            class_id = class_ids[i]
+            label = labels[class_id]
+            box = boxes[i]
+            cv2.putText(self.image, label, (box[0] + 8, box[1] + 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
             cv2.rectangle(self.image, (box[0], box[1]), (box[2], box[3]), color, line_width)
