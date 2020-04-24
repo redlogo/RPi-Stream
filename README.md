@@ -7,24 +7,29 @@ Live camera stream from Raspberry Pi to local host, do object detection with Cor
 ## Video Tutorial
 * [A preview of this project](https://www.youtube.com/watch?v=PCdNH4zSNug)
 * [![Foo](meta/preview.png)](https://www.youtube.com/watch?v=PCdNH4zSNug)
-## Preparation
-You will need:
+## Preparation and Environment
 * Raspberry Pi, [latest RPi4](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) is recommended.
 * A camera for RPi, such as [RPi camera module V2](https://www.raspberrypi.org/products/camera-module-v2/)
 * A local computer as host, [Ubuntu](https://ubuntu.com/) system is recommended.
 * [Coral EdgeTPU](https://coral.ai/products/accelerator/), USB version is tested in this repo.
+* Python virtual env is recommended for both RPi and computer host sides.
+  * virtualenv (python3.7) is recommended for RPi.
+  * [Anaconda / Conda](https://www.anaconda.com/) (python3.7) is recommended for computer host.
 ## Installation
 Clone this repository on both RPi and computer host sides:
 ```
 git clone https://github.com/redlogo/RPi-Stream.git
 ```
-Install libs needed for Raspberry Pi side:
+Install libs needed for Raspberry Pi:
 ```
-sudo bash RPi-requirements.sh
+bash RPi-requirements.sh
 ```
-Install libs required for local computer host side with the USB EdgeTPU unplugged:
+Install libs required for local computer host with the USB EdgeTPU unplugged:
 ```
-bash computer-host-requirements.sh
+# choose the correct one, depending on your computer system.
+bash computer-hose-requirements-linux.sh
+bash computer-host-requirements-macos.sh
+bash computer-host-requirements-windows.sh
 ```
 Plug USB EdgeTPU into the host usb 3.0 port.
 ## Usage
