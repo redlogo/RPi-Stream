@@ -1,5 +1,6 @@
-import cv2
 import platform
+
+import cv2
 import numpy as np
 import tflite_runtime.interpreter as tflite_interpreter
 from PIL import Image
